@@ -44,5 +44,17 @@
     "gh-pages": "^6.3.0",
     "globals": "^15.15.0",
     "vite": "^6.2.0"
+  },
+  "description": "This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.",
+  "main": "eslint.config.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DayaShankar215/information.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DayaShankar215/information/issues"
   }
 }
