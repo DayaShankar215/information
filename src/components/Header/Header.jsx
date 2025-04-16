@@ -1,7 +1,7 @@
 // src/components/Header/Header.jsx
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { FaBars, FaTimes, FaMoon, FaSun } from 'react-icons/fa';
+import { FaBars, FaTimes } from 'react-icons/fa';
 import { useInView } from 'react-intersection-observer';
 import styled from 'styled-components';
 
@@ -12,10 +12,8 @@ const HeaderContainer = styled.header`
   width: 100%;
   z-index: 1000;
   transition: all 0.3s ease;
-  background-color: ${({ scrolled, darkMode }) => 
-    scrolled ? 
-    (darkMode ? 'rgba(33, 37, 41, 0.95)' : 'rgba(248, 249, 250, 0.95)') : 
-    'transparent'};
+  background-color: ${({ scrolled }) => 
+    scrolled ? 'rgba(248, 249, 250, 0.95)' : 'transparent'};
   box-shadow: ${({ scrolled }) => (scrolled ? '0 2px 10px rgba(0, 0, 0, 0.1)' : 'none')};
 `;
 
@@ -25,16 +23,19 @@ const Nav = styled.nav`
   align-items: center;
   padding: 20px 0;
 `;
-
 const Logo = styled(motion.a)`
   font-size: 1.8rem;
-  font-weight: 700;
-  color: ${({ scrolled, darkMode }) => 
-    scrolled ? 
-    (darkMode ? 'var(--light-color)' : 'var(--dark-color)') : 
-    'white'};
+  font-weight: bold;
+  color: ${({ scrolled }) => (scrolled ? 'green' : 'white')};
+  text-decoration: none;
+  transition: color 0.3s ease;
+
   span {
-    color: var(--primary-color);
+    color: green;
+  }
+
+  &:hover {
+    color: green;
   }
 `;
 
@@ -60,10 +61,7 @@ const NavLinks = styled.ul`
 
 const NavLink = styled(motion.li)`
   a {
-    color: ${({ scrolled, darkMode }) => 
-      scrolled ? 
-      (darkMode ? 'var(--light-color)' : 'var(--dark-color)') : 
-      'white'};
+    color: ${({ scrolled }) => (scrolled ? 'var(--dark-color)' : 'white')};
     font-weight: 500;
     position: relative;
     transition: color 0.3s ease;
@@ -99,27 +97,8 @@ const MobileMenuButton = styled.div`
   }
 
   svg {
-    color: ${({ scrolled, darkMode }) => 
-      scrolled ? 
-      (darkMode ? 'var(--light-color)' : 'var(--dark-color)') : 
-      'white'};
+    color: ${({ scrolled }) => (scrolled ? 'var(--dark-color)' : 'white')};
     font-size: 1.5rem;
-  }
-`;
-
-const DarkModeToggle = styled(motion.div)`
-  display: flex;
-  align-items: center;
-  margin-left: 20px;
-  cursor: pointer;
-  
-  svg {
-    color: ${({ scrolled, darkMode }) => 
-      scrolled ? 
-      (darkMode ? 'var(--light-color)' : 'var(--dark-color)') : 
-      'white'};
-    font-size: 1.2rem;
-    transition: all 0.3s ease;
   }
 `;
 
@@ -129,7 +108,7 @@ const NavActions = styled.div`
   gap: 20px;
 `;
 
-function Header({ darkMode, toggleDarkMode }) {
+function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [ref, inView] = useInView({ threshold: 0.1 });
@@ -160,13 +139,12 @@ function Header({ darkMode, toggleDarkMode }) {
   ];
 
   return (
-    <HeaderContainer scrolled={scrolled} darkMode={darkMode} ref={ref}>
+    <HeaderContainer scrolled={scrolled} ref={ref}>
       <div className="container">
         <Nav>
           <Logo
             href="#home"
             scrolled={scrolled}
-            darkMode={darkMode}
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
@@ -179,7 +157,6 @@ function Header({ darkMode, toggleDarkMode }) {
               <NavLink
                 key={index}
                 scrolled={scrolled}
-                darkMode={darkMode}
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
@@ -191,16 +168,7 @@ function Header({ darkMode, toggleDarkMode }) {
           </NavLinks>
 
           <NavActions>
-            <DarkModeToggle 
-              scrolled={scrolled} 
-              darkMode={darkMode}
-              onClick={toggleDarkMode}
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-            >
-              {darkMode ? <FaSun /> : <FaMoon />}
-            </DarkModeToggle>
-            <MobileMenuButton scrolled={scrolled} darkMode={darkMode} onClick={toggleMenu}>
+            <MobileMenuButton scrolled={scrolled} onClick={toggleMenu}>
               {isOpen ? <FaTimes /> : <FaBars />}
             </MobileMenuButton>
           </NavActions>

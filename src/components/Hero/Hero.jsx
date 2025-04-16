@@ -158,6 +158,8 @@ function Hero() {
             <motion.img
               src="src\assets\images\daya1.jpg" // Replace with your image
               alt="Daya.img"
+              style={{ width: '300px', height: '500px' }} // Set width and height
+              whileInView={{ scale: 1 }}
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5, delay: 0.6 }}
